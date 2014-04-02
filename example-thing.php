@@ -23,10 +23,10 @@ class ExampleThing {
 	private function __construct() {
 		add_action( 'load-post.php', array( $this, 'admin_enqueue_scripts' ) );
 		add_action( 'load-post-new.php', array( $this, 'admin_enqueue_scripts' ) );
-		add_action( 'admin_footer', array( $this, 'print_templates' ) );
 	}
 
 	function admin_enqueue_scripts() {
+		add_action( 'admin_footer', array( $this, 'print_templates' ) );
 		$src = WP_PLUGIN_URL . "/example-thing/example-thing.js";
 		wp_enqueue_script( 'example-thing', $src, array( 'mce-view' ), false, 1 );
 	}
