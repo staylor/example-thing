@@ -22,6 +22,7 @@ class ExampleThing {
 
 	private function __construct() {
 		add_action( 'load-post.php', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'load-post-new.php', array( $this, 'admin_enqueue_scripts' ) );
 	}
 
 	function admin_enqueue_scripts() {
