@@ -21,9 +21,36 @@
 		}
 	}),
 
+	ThingTooController = media.controller.State.extend({
+		defaults: {
+			id: 'thing-too',
+			title: 'Thing Too!',
+			router: false,
+			priority: 60,
+			toolbar: 'thing-too',
+			content: 'thing-too',
+			menu: 'thing-details'
+		},
+
+		initialize: function( options ) {
+			this.thing = options.thing;
+			media.controller.State.prototype.initialize.apply( this, arguments );
+		}
+	}),
+
 	ThingDetailsView = media.view.Settings.AttachmentDisplay.extend({
 		className: 'thing-details',
 		template:  media.template( 'thing-details' ),
+		prepare: function() {
+			return _.defaults( {
+				model: this.model.toJSON()
+			}, this.options );
+		}
+	}),
+
+	ThingTooView = media.view.Settings.AttachmentDisplay.extend({
+		className: 'thing-too',
+		template:  media.template( 'thing-too' ),
 		prepare: function() {
 			return _.defaults( {
 				model: this.model.toJSON()
@@ -50,16 +77,27 @@
 			media.view.MediaFrame.Select.prototype.bindHandlers.apply( this, arguments );
 
 			this.on( 'menu:create:thing-details', this.createMenu, this );
-			this.on( 'content:render:thing-details', this.contentRender, this );
+			this.on( 'content:render:thing-details', this.contentDetailsRender, this );
+			this.on( 'content:render:thing-too', this.contentTooRender, this );
 			this.on( 'menu:render:thing-details', this.menuRender, this );
 			this.on( 'toolbar:render:thing-details', this.toolbarRender, this );
 		},
 
-		contentRender: function() {
+		contentDetailsRender: function() {
 			var view = new ThingDetailsView({
 				controller: this,
 				model: this.state().thing,
 				attachment: this.state().thing.attachment
+			}).render();
+
+			this.content.set( view );
+		},
+
+		contentTooRender: function() {
+			var view = new ThingTooView({
+				controller: this,
+				model: this.thing,
+				attachment: this.thing.attachment
 			}).render();
 
 			this.content.set( view );
@@ -109,9 +147,32 @@
 			}) );
 		},
 
+		toolbarTooRender: function() {
+			this.toolbar.set( new media.view.Toolbar({
+				controller: this,
+				items: {
+					button: {
+						style:    'primary',
+						text:     'Update Thing Too!',
+						priority: 80,
+						click:    function() {
+							var controller = this.controller;
+							controller.state().trigger( 'thing-too', controller.thing.toJSON() );
+							controller.setState( controller.options.state );
+							controller.reset();
+						}
+					}
+				}
+			}) );
+		},
+
 		createStates: function() {
 			this.states.add([
 				new ThingDetailsController( {
+					thing: this.thing
+				} ),
+
+				new ThingTooController( {
 					thing: this.thing
 				} )
 			]);

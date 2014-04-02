@@ -48,6 +48,14 @@ class ExampleThing {
 		</div>
 	</script>
 
+	<script type="text/html" id="tmpl-thing-too">
+		<div class="media-embed">
+			<div class="embed-media-settings">
+				<p>Name: {{ data.model.name }}<br/>Favorite Color: {{ data.model.color }}</p>
+			</div>
+		</div>
+	</script>
+
 	<script type="text/html" id="tmpl-editor-thing">
 		<div class="toolbar">
 			<div class="dashicons dashicons-edit edit"></div>
