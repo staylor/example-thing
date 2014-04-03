@@ -1,19 +1,18 @@
 /*globals window, document, $, jQuery, _, Backbone */
 (function ($, _, Backbone) {
 	"use strict";
-	var media = wp.media, baseDefaults = {
-		toolbar: 'thing-details',
-		content: 'thing-details',
-		menu: 'thing-details'
-	},
+	var media = wp.media,
 
 	ThingDetailsController = media.controller.State.extend({
-		defaults: _.defaults( {
+		defaults: {
 			id: 'thing-details',
 			title: 'Thing Details!',
+			toolbar: 'thing-details',
+			content: 'thing-details',
+			menu: 'thing-details',
 			router: false,
 			priority: 60
-		}, baseDefaults ),
+		},
 
 		initialize: function( options ) {
 			this.thing = options.thing;
@@ -59,13 +58,13 @@
 	}),
 
 	ThingDetailsFrame = media.view.MediaFrame.Select.extend({
-		defaults: _.defaults( {
+		defaults: {
 			id:      'thing',
 			url:     '',
 			type:    'link',
 			title:   'Thing!',
 			priority: 120
-		} ),
+		},
 
 		initialize: function( options ) {
 			this.thing = new Backbone.Model( options.metadata );
