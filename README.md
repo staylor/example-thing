@@ -12,3 +12,5 @@ To get started, create a Post in the WordPress editor with the following content
 `[thing]`
 
 Click it to edit.
+
+Note: you need to be running WordPress 3.9 (currently `trunk`) or later
