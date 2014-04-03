@@ -81,6 +81,7 @@
 			this.on( 'content:render:thing-too', this.contentTooRender, this );
 			this.on( 'menu:render:thing-details', this.menuRender, this );
 			this.on( 'toolbar:render:thing-details', this.toolbarRender, this );
+			this.on( 'toolbar:render:thing-too', this.toolbarTooRender, this );
 		},
 
 		contentDetailsRender: function() {
