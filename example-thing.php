@@ -27,7 +27,7 @@ class ExampleThing {
 
 	function admin_enqueue_scripts() {
 		add_action( 'admin_footer', array( $this, 'print_templates' ) );
-		$src = WP_PLUGIN_URL . "/example-thing/example-thing.js";
+		$src = plugins_url( 'example-thing.js', __FILE__ );
 		wp_enqueue_script( 'example-thing', $src, array( 'mce-view' ), false, 1 );
 	}
 
