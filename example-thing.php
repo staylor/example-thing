@@ -57,10 +57,6 @@ class ExampleThing {
 	</script>
 
 	<script type="text/html" id="tmpl-editor-thing">
-		<div class="toolbar">
-			<div class="dashicons dashicons-edit edit"></div>
-			<div class="dashicons dashicons-no-alt remove"></div>
-		</div>
 		<p>Name: {{ data.name }}<br/>Favorite Color: {{ data.color }}</p>
 	</script>
 	<?php
