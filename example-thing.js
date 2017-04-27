@@ -189,6 +189,7 @@
 
 		edit : function ( data ) {
 			var frame, shortcode = wp.shortcode.next( 'thing', data ).shortcode;
+
 			frame = new ThingDetailsFrame({
 				frame: 'thing',
 				state: 'thing-details',
@@ -218,37 +219,26 @@
 				content: content
 			});
 		}
-	},
+	};
 
-	thingMce = {
-		toView:  function( content ) {
-			var match = wp.shortcode.next( 'thing', content );
+	wp.mce.views.register( 'thing', {
 
-			if ( ! match ) {
-				return;
-			}
-
-			return {
-				index:   match.index,
-				content: match.content,
-				options: {
-					shortcode: match.shortcode
-				}
-			};
-		},
-		View: wp.mce.View.extend({
+		View: {
 			className: 'editor-thing',
-			template:  media.template( 'editor-thing' ),
+
+			template: media.template( 'editor-thing' ),
+			
 			initialize: function( options ) {
-				this.shortcode = options.shortcode;
+				this.shortcode = options.shortcode;	
 			},
+			
 			getHtml: function() {
 				return this.template( _.defaults(
 					this.shortcode.attrs.named,
 					thing.defaults
 				) );
 			}
-		}),
+		},
 
 		edit: function( node ) {
 			var self = this, frame, data;
@@ -258,12 +248,12 @@
 			frame.state('thing-details').on( 'update', function( selection ) {
 				var shortcode = thing.shortcode( selection ).string();
 				$( node ).attr( 'data-wpview-text', window.encodeURIComponent( shortcode ) );
-				wp.mce.views.refreshView( self, shortcode );
+				wp.mce.views.refreshView( self, shortcode, true );
 				frame.detach();
 			});
 			frame.open();
 		}
-	};
-	wp.mce.views.register( 'thing', thingMce );
+
+	} );
 
 }(jQuery, _, Backbone));
